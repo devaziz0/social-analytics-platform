@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  # Django
+  web: &python
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: social-analytics-project:0.0
+    command: sh -c 'python3 /opt/SocialAnalyticsProject/manage.py makemigrations && python3 /opt/SocialAnalyticsProject/manage.py migrate && python3 /opt/SocialAnalyticsProject/manage.py runsslserver [::]:8000'
+    volumes:
+      - ./SocialAnalyticsProject:/opt/SocialAnalyticsProject
+      - static_volume:/opt/SocialAnalyticsProject/staticfiles
+      - media_volume:/opt/SocialAnalyticsProject/media
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - rabbitmq
+      - celery_worker
+    environment:
+      GOOGLE_ADS_LOGIN_CUSTOMER_ID: '5358725466'
+      GOOGLE_ADS_DEVELOPER_TOKEN: '-xkxHJHAT8WChrK1D7hbpA'
+      GOOGLE_ADS_CLIENT_ID : '655568532862-l9fii845gmc7d015of3htq9jpdbc3sf8.apps.googleusercontent.com'
+      GOOGLE_ADS_CLIENT_SECRET: 'g1Fz9uox4xzN0y5Ol895UKXi'
+      GOOGLE_ADS_REFRESH_TOKEN: '1//03QhjkRTsWcU2CgYIARAAGAMSNwF-L9Ir6U1DfdAlCAoB4oBT6687edqPbdHy-KVJnPh6EYvIsaE12TXbxP_mBIVR2EkeK_cMD8c'
+
+  # RabbitMQ Broker
+  rabbitmq:
+    image: rabbitmq:3.7-alpine
+  
+  # Celery service
+  celery_worker:
+    <<: *python
+    command: sh -c "cd /opt/SocialAnalyticsProject/ && celery -A reporting worker --loglevel=info"
+    ports: []
+
+    depends_on: 
+      - rabbitmq
+
+  # Celery beat
+  # --pidfile= because worker already create it
+  celery_beat:
+    <<: *python
+    command: sh -c "cd /opt/SocialAnalyticsProject/ && celery -A reporting beat -l info --loglevel=info --pidfile="
+    ports: []
+    depends_on: 
+      - rabbitmq      
+
+  # redis:
+  #   image: redis
+  #   networks: 
+  #     - web_db    
+  
+volumes:
+  data:
+  static_volume:
+  media_volume:
