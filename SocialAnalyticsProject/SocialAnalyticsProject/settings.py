@@ -33,12 +33,20 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landing',
-    'reporting'
+
+    'reporting',
+    'sslserver',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -101,6 +110,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -120,3 +137,62 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SITE_ID = 1
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_posts','manage_pages','pages_show_list'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v6.0',
+    }
+}
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672'
+CELERY_ALWAYS_EAGER = False
+CELERY_RESULT_BACKEND = 'amqp://guest:guest@rabbitmq:5672'
+CELERY_RESULT_PERSISTENT = False
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_EMAIL_CHUNK_SIZE = 1
+CELERY_TIMEZONE = 'Asia/Makassar'
+
+from celery.schedules import crontab
+from datetime import timedelta
+# Other Celery settings
+CELERY_BEAT_SCHEDULE = {
+    'reporting-task': {
+        'task': 'modules.scheduler.tasks.periodic_reporting_task',
+        'schedule': timedelta(hours=3),
+        'args': []
+    },
+    'expire_campaigns':{
+        'task': 'modules.scheduler.tasks.campaign_expire_task',
+        'schedule': crontab(minute=0, hour=0),
+        'args': []
+    }
+}
