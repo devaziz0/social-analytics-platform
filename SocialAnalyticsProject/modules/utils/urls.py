@@ -13,9 +13,9 @@ def get_page_insights(object_id,metrics,access_token):
 
     url = URL_BASE_FACEBOOK+ object_id + URL_PAGE_INSIGHTS + '?metric='
     for metric in metrics:
-        url += '{' + metric + '},'
+        url +=  metric + ','
     
-    data = access_token(url,access_token)
+    data = add_access_token(url,access_token)
 
     return data.json()
 

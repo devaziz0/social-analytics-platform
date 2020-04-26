@@ -13,7 +13,9 @@ def social_login_handler(sender, **kwargs):
     facebook_page_list = FacebookPage.objects.filter(account=social_account)
     
     for page in pages_list['data']:
-
-        facebook_page = FacebookPage.objects.create(
-            account=social_account, page_id=page['id'], access_token=page['access_token'], name=page['name'])
-        facebook_page.save()
+        try:
+            facebook_page = FacebookPage.objects.create(
+                account=social_account, page_id=page['id'], access_token=page['access_token'], name=page['name'])
+            facebook_page.save()
+        except:
+            pass
