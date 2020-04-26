@@ -144,7 +144,7 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile', 'user_posts','manage_pages','pages_show_list'],
+        'SCOPE': ['email', 'public_profile', 'user_posts','manage_pages','pages_show_list','read_insights'],
         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
         'INIT_PARAMS': {'cookie': True},
         'FIELDS': [
@@ -185,14 +185,5 @@ from celery.schedules import crontab
 from datetime import timedelta
 # Other Celery settings
 CELERY_BEAT_SCHEDULE = {
-    'reporting-task': {
-        'task': 'modules.scheduler.tasks.periodic_reporting_task',
-        'schedule': timedelta(hours=3),
-        'args': []
-    },
-    'expire_campaigns':{
-        'task': 'modules.scheduler.tasks.campaign_expire_task',
-        'schedule': crontab(minute=0, hour=0),
-        'args': []
-    }
+    
 }
