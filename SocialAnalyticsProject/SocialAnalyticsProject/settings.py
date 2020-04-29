@@ -86,8 +86,12 @@ WSGI_APPLICATION = 'SocialAnalyticsProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd5p296lm58vklt',
+        'USER': 'kmgwshpplirpph',
+        'PASSWORD': 'ae3026490eebdd231674065574b045b88f3170308478f5b791e981d362f11dd9',
+        'HOST': 'ec2-174-129-27-158.compute-1.amazonaws.com',
+        'PORT': '',
     }
 }
 
