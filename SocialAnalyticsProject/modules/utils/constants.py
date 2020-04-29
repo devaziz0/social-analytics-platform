@@ -11,3 +11,11 @@ METRIC_ENGAGED_USERS='page_engaged_users'
 ### The number of times people have engaged with your posts 
 # through reactions, comments, shares and more.
 METRIC_POST_ENGAGEMENTS='page_post_engagements'
+
+###The number of times any content from your Page or about 
+# your Page entered a person's screen. 
+METRIC_PAGE_IMPRESSIONS = 'page_impressions'
+
+###The number of times your Page's post entered a 
+# person's screen.
+METRIC_POST_IMPRESSIONS = 'post_impressions'
