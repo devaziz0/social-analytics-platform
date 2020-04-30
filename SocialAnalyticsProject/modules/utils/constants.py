@@ -3,6 +3,8 @@ URL_PAGE_INSIGHTS='/insights'
 
 URL_PAGE_LIST = 'me/accounts'
 
+URL_PAGE_POSTS = '/published_posts'
+
 
 ### The number of people who engaged with your Page. 
 ### Engagement includes any click.

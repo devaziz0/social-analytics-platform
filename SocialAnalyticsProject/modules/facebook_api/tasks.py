@@ -1,10 +1,13 @@
 from celery import shared_task
 from modules.utils.urls import *
 from modules.utils.constants import *
+from modules.utils.helpers import *
+
 
 from allauth.socialaccount.models import SocialToken
 from reporting.models import *
 from landing.models import *
+
 
 
 @shared_task
@@ -32,3 +35,14 @@ def page_engagement_task(page_pk,start_date,end_date):
     facebook_report.save()
 
     return engagement
+
+@shared_task
+def page_posts_task(page_pk):
+    
+    facebook_page = FacebookPage.objects.get(pk=page_pk)
+
+    data = get_page_posts(facebook_page.page_id, facebook_page.access_token)
+
+    get_page_post_helper(data,facebook_page)
+
+    return data
