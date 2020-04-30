@@ -37,6 +37,13 @@ def get_page_insights(object_id,metrics,access_token,start_date,end_date):
 
     return data
 
+def get_post_insights(object_id,metric,access_token):
+
+    url = URL_BASE_FACEBOOK+ object_id + URL_PAGE_INSIGHTS + '?metric=' + metric
+
+    data = extract_metrics_data(url,access_token)
+
+    return data
 
 def get_pages_list(access_token):
     
@@ -46,7 +53,7 @@ def get_pages_list(access_token):
 
     return data
 
-
+# Get Latest 100 page posts
 def get_page_posts(page_id,access_token):
     
     url = URL_BASE_FACEBOOK +str(page_id)+ URL_PAGE_POSTS
