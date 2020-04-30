@@ -1,9 +1,14 @@
 from django.db import models
 from landing.models import *
 # Create your models here.
+
 class FacebookPost(models.Model):
+    
+    created_time= models.DateTimeField()
     content = models.CharField(max_length=2048)
-    date = models.DateField()
+    post_id = models.CharField(max_length=2048, unique=True)
+    page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE)
+
 
 class InstagramPost(models.Model):
     content = models.CharField(max_length=2048)
