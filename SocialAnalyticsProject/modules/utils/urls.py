@@ -3,13 +3,14 @@ import requests
 import datetime
 import calendar
 
-
+# Add access token to url and return json response
 def add_access_token(url, access_token):
     PARAMS = {"access_token": access_token}
     r = requests.get(url = url, params = PARAMS) 
 
     return r.json()
 
+# Extract data that uses until & since parameters
 def extract_metrics_data(url, access_token):
 
     data = add_access_token(url, access_token)
@@ -30,8 +31,6 @@ def get_page_insights(object_id,metrics,access_token,start_date,end_date):
 
     url+='&since='+str(start_timestamp)
     url+='&until='+str(end_timestamp)
-
-
 
     data = extract_metrics_data(url,access_token)
 
