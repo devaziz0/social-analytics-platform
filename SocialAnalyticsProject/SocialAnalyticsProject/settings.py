@@ -171,8 +171,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+
 
 CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672'
 CELERY_ALWAYS_EAGER = False
@@ -191,3 +190,4 @@ from datetime import timedelta
 CELERY_BEAT_SCHEDULE = {
     
 }
+ACCOUNT_EMAIL_VERIFICATION = "none"
