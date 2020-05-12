@@ -25,14 +25,18 @@ def get_page_insights(object_id,metrics,access_token,start_date,end_date):
     url = URL_BASE_FACEBOOK+ object_id + URL_PAGE_INSIGHTS + '?metric='
     for metric in metrics:
         url +=  metric + ','
-    
-    start_timestamp = calendar.timegm(start_date.timetuple())
-    end_timestamp = calendar.timegm(end_date.timetuple())
 
-    url+='&since='+str(start_timestamp)
-    url+='&until='+str(end_timestamp)
 
-    data = extract_metrics_data(url,access_token)
+    data = add_access_token(url,access_token)
+
+    return data
+
+def get_comments(object_id,access_token):
+
+    url = URL_BASE_FACEBOOK+ object_id + URL_COMMENTS
+
+
+    data = add_access_token(url,access_token)
 
     return data
 
