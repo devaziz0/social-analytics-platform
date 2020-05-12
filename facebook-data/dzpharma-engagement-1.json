@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "name": "page_post_engagements",
+      "period": "day",
+      "values": [
+        {
+          "value": 1,
+          "end_time": "2020-05-07T07:00:00+0000"
+        },
+        {
+          "value": 4,
+          "end_time": "2020-05-08T07:00:00+0000"
+        }
+      ],
+      "title": "Daily Post Engagements",
+      "description": "Daily: The number of times people have engaged with your posts through like, comments and shares and more.",
+      "id": "162403274173980/insights/page_post_engagements/day"
+    },
+    {
+      "name": "page_post_engagements",
+      "period": "week",
+      "values": [
+        {
+          "value": 24,
+          "end_time": "2020-05-07T07:00:00+0000"
+        },
+        {
+          "value": 28,
+          "end_time": "2020-05-08T07:00:00+0000"
+        }
+      ],
+      "title": "Weekly Post Engagements",
+      "description": "Weekly: The number of times people have engaged with your posts through like, comments and shares and more.",
+      "id": "162403274173980/insights/page_post_engagements/week"
+    },
+    {
+      "name": "page_post_engagements",
+      "period": "days_28",
+      "values": [
+        {
+          "value": 137,
+          "end_time": "2020-05-07T07:00:00+0000"
+        },
+        {
+          "value": 92,
+          "end_time": "2020-05-08T07:00:00+0000"
+        }
+      ],
+      "title": "28 Days Post Engagements",
+      "description": "28 Days: The number of times people have engaged with your posts through like, comments and shares and more.",
+      "id": "162403274173980/insights/page_post_engagements/days_28"
+    }
+  ],
+  "paging": {
+    "previous": "https://graph.facebook.com/v6.0/162403274173980/insights?access_token=EAACcqUaQjwYBADToqduSmHQQWsmyZBQZCu0zpYNmrmzjQTpQudmCRxV8fQBxCs24vSBw8OYRNSdc8PKiPS8MQ6ZB9zYVdqjFs53mLWBg4gci8sv6FIXHBr8BtY9jMEcd4FPCTrIH3FXzWiO9Dzzkf6KX1X2jlYWpwYSkATBMqlI0ssf8OhEMVyHbPUP7vzdLGWIcpZBpxAZDZD&pretty=0&metric=page_post_engagements&since=1588575600&until=1588748400",
+    "next": "https://graph.facebook.com/v6.0/162403274173980/insights?access_token=EAACcqUaQjwYBADToqduSmHQQWsmyZBQZCu0zpYNmrmzjQTpQudmCRxV8fQBxCs24vSBw8OYRNSdc8PKiPS8MQ6ZB9zYVdqjFs53mLWBg4gci8sv6FIXHBr8BtY9jMEcd4FPCTrIH3FXzWiO9Dzzkf6KX1X2jlYWpwYSkATBMqlI0ssf8OhEMVyHbPUP7vzdLGWIcpZBpxAZDZD&pretty=0&metric=page_post_engagements&since=1588921200&until=1589094000"
+  }
+}
