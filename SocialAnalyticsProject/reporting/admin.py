@@ -4,3 +4,4 @@ from .models import *
 
 admin.site.register(FacebookPageReport)
 admin.site.register(FacebookPost)
+admin.site.register(FacebookComment)
