@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    flask:
+        build: 
+          context: .
+          dockerfile: ./Dockerfile-Flask
+        volumes: 
+          - ./model.h5:/opt/model.h5
+          - ./model.w2v:/opt/model.w2v
+          - ./tokenizer.pkl:/opt/tokenizer.pkl
+          - ./encoder.pkl:/opt/encoder.pkl
+        command: sh -c 'cd /home ; ls ;  export FLASK_APP=app.py ; export FLASK_DEBUG=0; flask run'
+        ports:
+            - "5000:5000"

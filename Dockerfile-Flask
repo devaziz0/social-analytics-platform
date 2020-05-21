@@ -1,0 +1,18 @@
+FROM python:3.6
+
+ENV APP_DIR_NAME SocialAnalyticsProject
+ENV APP_PATH /opt/$APP_DIR_NAME
+
+
+#installing django
+COPY requirements-flask.txt /
+RUN pip3 install -r requirements-flask.txt
+RUN rm requirements-flask.txt
+#adding the django project
+RUN mkdir -p $APP_PATH
+COPY app.py /home
+
+ENV FLASK_RUN_HOST 0.0.0.0
+
+WORKDIR /home
+

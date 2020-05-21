@@ -1,0 +1,9 @@
+requests
+numpy
+pandas
+langdetect
+tensorflow==1.14.0
+keras==2.2.5
+gensim
+Flask
+sklearn
