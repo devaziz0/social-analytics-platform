@@ -127,7 +127,7 @@ def hello():
     return predict("i don't know what i'm doing")
 
 
-@app.route('/predict', methods=['POST', 'GET'])
+@app.route('/predict/', methods=['POST', 'GET'])
 def predict_view():
     error = None
     if request.method == 'POST':
