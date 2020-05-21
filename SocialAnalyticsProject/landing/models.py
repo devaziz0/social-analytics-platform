@@ -8,3 +8,7 @@ class FacebookPage(models.Model):
     account = models.ForeignKey(SocialAccount,on_delete=models.CASCADE)
     access_token = models.CharField(max_length=2048)
     name =  models.CharField(max_length=248)
+
+    def __str__(self):
+        return self.name
+    
