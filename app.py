@@ -1,6 +1,7 @@
 
 from flask import Flask
 from flask import request
+from langdetect import detect
 import pandas as pd
 
 
@@ -150,14 +151,17 @@ def predict_batch_view():
         response = {"NEGATIVE": 0, "POSITIVE": 0, "NEUTRAL": 0, }
 
         for message in msgs_list:
+            lang = detect(message)
 
-            result = predict(message)
+            # Only do prediction on english messages
+            if lang == 'en':
+                result = predict(message)
 
-            if result['label'] == "NEGATIVE":
-                response['NEGATIVE'] += 1
-            elif result['label'] == "NEUTRAL":
-                response['NEUTRAL'] += 1
-            elif result['label'] == "POSITIVE":
-                response['POSITIVE'] += 1
+                if result['label'] == "NEGATIVE":
+                    response['NEGATIVE'] += 1
+                elif result['label'] == "NEUTRAL":
+                    response['NEUTRAL'] += 1
+                elif result['label'] == "POSITIVE":
+                    response['POSITIVE'] += 1
 
         return response
