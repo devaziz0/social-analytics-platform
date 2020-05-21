@@ -25,6 +25,8 @@ import logging
 import time
 import pickle
 import itertools
+import tensorflow as tf
+graph = tf.get_default_graph()
 # Set log
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
@@ -104,7 +106,8 @@ def predict(text, include_neutral=True):
     # Tokenize text
     x_test = pad_sequences(tokenizer.texts_to_sequences([text]), maxlen=SEQUENCE_LENGTH)
     # Predict
-    score = model.predict([x_test])[0]
+    with graph.as_default():
+        score = model.predict([x_test])[0]
     # Decode sentiment
     label = decode_sentiment(score, include_neutral=include_neutral)
 
