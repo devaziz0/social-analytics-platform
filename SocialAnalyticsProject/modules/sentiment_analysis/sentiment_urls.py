@@ -1,5 +1,12 @@
-BASE_SENTIMENT_URL = "http://34.72.4.191:5000/"
+from .constants import *
+import requests
 
-URL_PREDICT = 'predict/'
 
-URL_PREDICT_MULTIPLE = 'predict-multiple/'
+def predict_multiple_comments(comments_list):
+
+    url = BASE_SENTIMENT_URL + URL_PREDICT_MULTIPLE
+    r = requests.post(url, json=comments_list)
+
+    data = r.json()
+
+    return data
