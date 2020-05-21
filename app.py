@@ -140,7 +140,7 @@ def predict_view():
 
 
 @app.route('/predict-multiple/', methods=['POST', 'GET'])
-def predict_view():
+def predict_batch_view():
     error = None
 
     if request.method == 'POST':
