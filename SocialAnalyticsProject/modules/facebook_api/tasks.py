@@ -1,5 +1,5 @@
 from celery import shared_task
-from modules.utils.urls import *
+from modules.utils.facebook_urls import *
 from modules.utils.constants import *
 from modules.utils.helpers import *
 
@@ -66,4 +66,12 @@ def post_insights_task(post_pk,metric):
 
     facebook_post_report.save()
 
+    return data
+
+
+
+@shared_task
+def engagement_growth_task(page_pk, metric, date_preset):
+    facebook_page = FacebookPage.objects.get(pk=page_pk)
+    data = get_post_insights(facebook_page.page_id,metric, date_preset, facebook_page.access_token)
     return data

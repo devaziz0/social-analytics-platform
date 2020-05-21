@@ -7,7 +7,6 @@ import calendar
 def add_access_token(url, access_token):
     PARAMS = {"access_token": access_token}
     r = requests.get(url = url, params = PARAMS) 
-
     return r.json()
 
 # Extract data that uses until & since parameters
@@ -15,7 +14,7 @@ def extract_metrics_data(url, access_token):
 
     data = add_access_token(url, access_token)
 
-    value = data['data'][0]['values'][0]['value']
+    value = data
 
     return value
 
@@ -40,9 +39,11 @@ def get_comments(object_id,access_token):
 
     return data
 
-def get_post_insights(object_id,metric,access_token):
+def get_post_insights(object_id, metric, date_preset, access_token):
 
     url = URL_BASE_FACEBOOK+ object_id + URL_PAGE_INSIGHTS + '?metric=' + metric
+
+    url += '&date_preset=' + date_preset
 
     data = extract_metrics_data(url,access_token)
 

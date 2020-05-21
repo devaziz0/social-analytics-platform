@@ -3,6 +3,8 @@ from allauth.socialaccount.models import SocialToken
 import requests
 from modules.schedules.tasks import *
 from modules.facebook_api.tasks import *
+from django.http import JsonResponse
+from modules.utils.constants import *
 
 # Create your views here.
 
@@ -22,3 +24,60 @@ def get_insight(request):
     ### extracting data in json format 
     #data = r.json() 
     page_engagement_task.delay(request.user.pk)
+
+def get_engagement(request, page_pk, date_preset):
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, date_preset)
+    result = t.wait(timeout=None, interval=0.5)
+    return JsonResponse(data=result, safe=False)
+
+# Compares the engagement of the past 28 days with the engagement on the same period last month
+def get_28days_monthly_growth(request, page_pk):
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'this_month')
+    this_month = t.wait(timeout=None, interval=0.5)
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'last_month')
+    last_month = t.wait(timeout=None, interval=0.5)
+    this_month_value = this_month['data'][2]['values'][0]['value']
+    last_month_value = last_month['data'][2]['values'][0]['value']
+    result = {
+        "growth": this_month_value - last_month_value
+    }
+    return JsonResponse(data=result, safe=False)
+
+# Compares the engagement of this week with the engagement on the same week last month
+def get_1week_monthly_growth(request, page_pk):
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'this_month')
+    this_month = t.wait(timeout=None, interval=0.5)
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'last_month')
+    last_month = t.wait(timeout=None, interval=0.5)
+    this_month_value = this_month['data'][1]['values'][0]['value']
+    last_month_value = last_month['data'][1]['values'][0]['value']
+    result = {
+        "growth": this_month_value - last_month_value
+    }
+    return JsonResponse(data=result, safe=False)
+    
+# Compares the engagement of today with the engagement on the same day last month
+def get_1day_monthly_growth(request, page_pk):
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'this_month')
+    this_month = t.wait(timeout=None, interval=0.5)
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'last_month')
+    last_month = t.wait(timeout=None, interval=0.5)
+    this_month_value = this_month['data'][0]['values'][0]['value']
+    last_month_value = last_month['data'][0]['values'][0]['value']
+    result = {
+        "growth": this_month_value - last_month_value
+    }
+    return JsonResponse(data=result, safe=False)
+
+# Compares the engagement of today with the engagement of yesterday
+def get_1day_daily_growth(request, page_pk):
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'today')
+    today = t.wait(timeout=None, interval=0.5)
+    t = engagement_growth_task.delay(page_pk, METRIC_POST_ENGAGEMENTS, 'yesterday')
+    yesterday = t.wait(timeout=None, interval=0.5)
+    today_value = today['data'][0]['values'][0]['value']
+    yesterday_value = yesterday['data'][0]['values'][0]['value']
+    result = {
+        "growth": today_value - yesterday_value
+    }
+    return JsonResponse(data=result, safe=False)

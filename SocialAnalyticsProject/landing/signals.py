@@ -1,6 +1,6 @@
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
-from modules.utils.urls import get_pages_list,get_page_posts
+from modules.utils.facebook_urls import get_pages_list,get_page_posts
 from modules.utils.helpers import get_page_post_helper
 
 # Signal launched after a user is signed up and before the login occue
