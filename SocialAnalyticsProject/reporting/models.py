@@ -31,6 +31,7 @@ class InstagramReport(models.Model):
 class FacebookPostReport(models.Model):
     impressions = models.IntegerField()
     engagement = models.IntegerField()
+    sentiment = models.FloatField()
     date = models.DateField()
     post = models.ForeignKey(FacebookPost,on_delete=models.CASCADE)
 
