@@ -8,7 +8,6 @@ from modules.utils.constants import *
 from modules.utils.news import *
 from modules.sentiment_analysis.sentiment_urls import predict_multiple_comments
 
-# Create your views here.
 
 def get_insight(request):
     #user = request.user
@@ -21,7 +20,7 @@ def get_insight(request):
     # r = requests.get(url = url, params = PARAMS)
     # extracting data in json format
     # data = r.json()
-    # page_engagement_task.delay(request.user.pk)
+    page_engagement_task.delay(request.user.pk)
 
 
 def get_engagement(request, page_pk, date_preset):
@@ -101,9 +100,7 @@ def get_1day_daily_growth(request, page_pk):
 # Compares the engagement of today with the engagement of yesterday
 def get_top_headlines_category(request, category):
     data = top_headlines_category(category)
-    result = {
-        "source": data['articles'][0]['source']['name']
-    }
+    result = data['articles']
     return JsonResponse(data=result, safe=False)
 
 
@@ -114,3 +111,9 @@ def get_post_sentiment(request, post_id):
     data = predict_multiple_comments(facebook_comment_list)
 
     return JsonResponse(data=data, safe=False)
+
+def news_suggestions(request):
+    context = {
+        'title': 'News Suggestion',
+    }
+    return render(request, 'news.html', context)

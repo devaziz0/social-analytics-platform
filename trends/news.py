@@ -6,7 +6,6 @@ import requests
 url_top_headlines = 'http://newsapi.org/v2/top-headlines'
   
 # Params 
-country = 'delhi technological university'
 apiKey = 'd05ac5fb39264b84a4fb046c25467800'
 # defining a params dict for the parameters to be sent to the API 
   
@@ -24,3 +23,5 @@ def top_headlines_category(category):
     # extracting data in json format 
     data = r.json()
     return data
+
+print(top_headlines_category('health'))

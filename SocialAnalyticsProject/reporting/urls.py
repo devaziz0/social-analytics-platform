@@ -12,5 +12,6 @@ urlpatterns = [
     path('pages/<int:page_pk>/growth/28days_monthly',views.get_28days_monthly_growth,name='this_month_vas_last_month_growth'),
     path('pages/<int:page_pk>/growth/1day_daily',views.get_1day_daily_growth,name='today_vs_yesterday_growth'),
     path('news/<str:category>', views.get_top_headlines_category, name='get_top_headlines_category'),
+    path('news/', views.news_suggestions, name='news_suggestions'),
     path('post/<int:post_id>/predict/',views.get_post_sentiment, name= 'get_post_sentiment'),
 ]
