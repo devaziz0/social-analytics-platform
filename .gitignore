@@ -122,4 +122,7 @@ dmypy.json
 # vscode
 .vscode/
 
+# resources
+resources/
+
 # End of https://www.gitignore.io/api/django
