@@ -6,8 +6,9 @@ import requests
 url_top_headlines = 'http://newsapi.org/v2/top-headlines'
   
 # Params 
-country = 'delhi technological university'
 apiKey = 'd05ac5fb39264b84a4fb046c25467800'
+language = 'en'
+country = 'us'
 # defining a params dict for the parameters to be sent to the API 
   
 # Method to get top headlines per category
@@ -16,7 +17,9 @@ apiKey = 'd05ac5fb39264b84a4fb046c25467800'
 def top_headlines_category(category):
     PARAMS = {
         'category': category,
-        'apiKey': apiKey
+        'language': language,
+        'country': country,
+        'apiKey': apiKey,
         }
 
     r = requests.get(url = url_top_headlines, params = PARAMS) 
