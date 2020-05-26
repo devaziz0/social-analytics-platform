@@ -1,5 +1,7 @@
 from django.db import models
 from landing.models import *
+from django.contrib.postgres.fields import JSONField
+
 # Create your models here.
 
 class FacebookPost(models.Model):
@@ -31,6 +33,7 @@ class InstagramReport(models.Model):
 class FacebookPostReport(models.Model):
     impressions = models.IntegerField()
     engagement = models.IntegerField()
+    sentiment = JSONField()
     date = models.DateField()
     post = models.ForeignKey(FacebookPost,on_delete=models.CASCADE)
 
