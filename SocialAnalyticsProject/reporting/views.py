@@ -2,9 +2,10 @@ from django.shortcuts import render
 from allauth.socialaccount.models import SocialToken
 import requests
 from modules.schedules.tasks import *
-from modules.facebook_api.tasks import *
+from modules.facebook_api.tasks import engagement_growth_task, page_engagement_task
 from django.http import JsonResponse
 from modules.utils.constants import *
+from modules.utils.news import *
 
 # Create your views here.
 
@@ -79,5 +80,14 @@ def get_1day_daily_growth(request, page_pk):
     yesterday_value = yesterday['data'][0]['values'][0]['value']
     result = {
         "growth": today_value - yesterday_value
+    }
+    return JsonResponse(data=result, safe=False)
+
+
+# Compares the engagement of today with the engagement of yesterday
+def get_top_headlines_category(request, category):
+    data = top_headlines_category(category)
+    result = {
+        "source": data['articles'][0]['source']['name']
     }
     return JsonResponse(data=result, safe=False)
