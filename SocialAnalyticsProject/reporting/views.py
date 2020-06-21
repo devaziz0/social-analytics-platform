@@ -9,6 +9,8 @@ from modules.utils.news import *
 from modules.utils.news_v2 import *
 from modules.utils.trends import *
 from modules.sentiment_analysis.sentiment_urls import predict_multiple_comments
+from modules.sentiment_analysis.sentiment_urls import predict_multiple_comments
+
 from .models import *
 
 
@@ -207,8 +209,8 @@ def sentiments_page(request):
     return render(request, 'sentiment.html', context)
 
 def collect_comments_page(request):
-    user_prefs = UserPreferences.get(user=request.user)
-    page = FacebookPage.objects.get(pk=user_prefs.fav_page)
+    #user_prefs = UserPreferences.objects.get(user=request.user)
+    page = FacebookPage.objects.filter(account__user=request.user).first()
     posts = FacebookPost.objects.filter(page=page)
     context = {
         'title': 'Comments Collect',
@@ -216,3 +218,13 @@ def collect_comments_page(request):
         'posts': posts,
     }
     return render(request, 'posts_collect_comments.html', context)
+
+def sync_comments(request,post_id):
+    post = FacebookPost.objects.get(pk=post_id,page__account__user=request.user)
+    data_comments = get_comments(post['id'],post.page.access_token)
+
+    for comment in data_comments['data']:
+        facebook_comment = FacebookComment.objects.create(content=comment['message'],comment_id=comment['id'],post=facebook_post,created_time=datetime.datetime.now())
+        facebook_comment.save()
+    
+    return JsonResponse(data={"message": "success"})
