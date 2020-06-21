@@ -21,6 +21,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                        {% for post in posts %}
+                        <tr>
+                          <td><a href="#">{{post.created_time}}</a></td>
+                          <td>?</td>
+                          <td>{{post.content}}</td>
+                          <td><label class="badge badge-danger">Comments missing</label></td>
+                          <td><label class="badge badge-danger">Not done yet</label></td>
+                          <td><a href="#">Sync Comments</a></td>
+                        </tr>
+                        {% endfor %}
                         <tr>
                           <td><a href="#">13/05/2020</a></td>
                           <td>87</td>

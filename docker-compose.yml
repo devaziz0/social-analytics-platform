@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     image: social-analytics-project:0.0
-    command: sh -c 'python3 /opt/SocialAnalyticsProject/manage.py makemigrations && python3 /opt/SocialAnalyticsProject/manage.py migrate && python3 /opt/SocialAnalyticsProject/manage.py runsslserver [::]:8000'
+    command: sh -c 'python3 /opt/SocialAnalyticsProject/manage.py runsslserver [::]:8000'
     volumes:
       - ./SocialAnalyticsProject:/opt/SocialAnalyticsProject
       - static_volume:/opt/SocialAnalyticsProject/staticfiles

@@ -209,8 +209,16 @@ def sentiments_page(request):
     return render(request, 'sentiment.html', context)
 
 def collect_comments_page(request):
-    #user_prefs = UserPreferences.objects.get(user=request.user)
-    page = FacebookPage.objects.filter(account__user=request.user).first()
+    try:
+        user_prefs = UserPreferences.objects.get(user=request.user)
+    except:
+        # We take the first page in case there is no user prefs
+        page = FacebookPage.objects.filter(account__user=request.user).first()
+        user_prefs = UserPreferences(
+            user=request.user,
+            fav_page=page
+            )
+    page = user_prefs.fav_page
     posts = FacebookPost.objects.filter(page=page)
     context = {
         'title': 'Comments Collect',
