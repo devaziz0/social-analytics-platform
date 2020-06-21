@@ -162,10 +162,6 @@ def get_related_topics(request, topic):
     return JsonResponse(data=result, safe=False)
 
 def get_post_sentiment(request, post_id):
-    facebook_comment_list = list(FacebookComment.objects.filter(
-        post__pk=post_id).values_list('content', flat=True))
-
-    data = predict_multiple_comments(facebook_comment_list)
 
     return JsonResponse(data=data, safe=False)
 
@@ -202,9 +198,15 @@ def predict_page(request):
     }
     return render(request, 'predict.html', context)
 
-def sentiments_page(request):
+def sentiments_page(request,post_id):
+    facebook_comment_list = list(FacebookComment.objects.filter(
+        post__pk=post_id).values_list('content', flat=True))
+
+    data = predict_multiple_comments(facebook_comment_list)
+
     context = {
         'title': 'Sentiment Analysis',
+        "data": data,
     }
     return render(request, 'sentiment.html', context)
 

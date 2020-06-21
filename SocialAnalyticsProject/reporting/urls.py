@@ -18,7 +18,7 @@ urlpatterns = [
     path('news/keyword', views.news_suggestions_keyword, name='news_suggestions_keyword'),
     path('post/<int:post_id>/predict/',views.get_post_sentiment, name= 'get_post_sentiment'),
     path('prediction/', views.predict_page, name='predict_page'),
-    path('sentiments/', views.sentiments_page, name='sentiments_page'),
+    path('post/<int:post_id>/sentiments/', views.sentiments_page, name='sentiments_page'),
     path('related-topics/<str:topic>',views.get_related_topics, name= 'get_related_topics'),
     path('collect-comments/',views.collect_comments_page, name= 'collect_comments_page'),
 ]
