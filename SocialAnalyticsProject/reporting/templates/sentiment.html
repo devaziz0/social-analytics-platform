@@ -9,8 +9,8 @@
                     <div class="card-body">
                       <h4 class="card-title">Analysis</h4>
                       <a href="#"><h6>Post Link</h6></a><br>
-                      <h6>Comments analyzed: 64</h6><br>
-                      <h6>Overall score: <span style="color:#5cb85c">Positive</span></h6><br>
+                      <h6 id="commentsCount">Comments analyzed: </h6><br>
+                      <h6 id="score">Overall score: </h6><br>
                       <canvas id="donutChart"></canvas>
                     </div>
                 </div>
@@ -30,10 +30,25 @@
             data: {
                 labels: ['Positive', 'Negative', 'Neutral'],
                 datasets: [{
-                    data: [65, 12, 23],
+                    data: [{{data.POSITIVE}}, {{data.NEGATIVE}}, {{data.NEUTRAL}}],
                     backgroundColor: ["#5cb85c", "#d9534f", "#428bca"], 
                 }],
             }
         });
+        var positive_comments = {{data.POSITIVE}}
+        var negative_comments = {{data.NEGATIVE}}
+        var neutral_comments = {{data.NEUTRAL}}
+
+        var total_comments = positive_comments + negative_comments+ neutral_comments
+        $('#commentsCount').text($('#commentsCount').text()+ total_comments)
+        if (positive_comments >= negative_comments && positive_comments >= neutral_comments) {
+            $('#score').append('<span style="color:#5cb85c">Positive</span>')
+        } else if (negative_comments > neutral_comments) {
+            $('#score').append('<span style="color:#d9534f">Negative</span>')
+
+        } else {
+            $('#score').append('<span style="color:#428bca">Neutral</span>')
+
+        }
     </script>
     {% endblock %}

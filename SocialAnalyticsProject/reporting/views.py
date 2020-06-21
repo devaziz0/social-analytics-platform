@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from allauth.socialaccount.models import SocialToken
 import requests
 from modules.schedules.tasks import *
@@ -162,10 +162,6 @@ def get_related_topics(request, topic):
     return JsonResponse(data=result, safe=False)
 
 def get_post_sentiment(request, post_id):
-    facebook_comment_list = list(FacebookComment.objects.filter(
-        post__pk=post_id).values_list('content', flat=True))
-
-    data = predict_multiple_comments(facebook_comment_list)
 
     return JsonResponse(data=data, safe=False)
 
@@ -202,9 +198,24 @@ def predict_page(request):
     }
     return render(request, 'predict.html', context)
 
-def sentiments_page(request):
+def sentiments_page(request,post_id):
+    post = FacebookPost.objects.get(pk=post_id,page__account__user=request.user)
+
+    post_report = FacebookPostReport.objects.get(post=post)
+
+    if post_report.sentiment == None:
+
+        facebook_comment_list = list(FacebookComment.objects.filter(
+            post=post).values_list('content', flat=True))
+
+        data = predict_multiple_comments(facebook_comment_list)
+
+    else:
+        data = post_report.sentiment
+
     context = {
         'title': 'Sentiment Analysis',
+        "data": data,
     }
     return render(request, 'sentiment.html', context)
 
@@ -229,13 +240,13 @@ def collect_comments_page(request):
 
 def sync_comments(request,post_id):
     post = FacebookPost.objects.get(pk=post_id,page__account__user=request.user)
-    data_comments = get_comments(post['id'],post.page.access_token)
-
+    data_comments = get_comments(post.post_id,post.page.access_token)
+    print(data_comments)
     for comment in data_comments['data']:
         facebook_comment = FacebookComment.objects.create(content=comment['message'],comment_id=comment['id'],post=facebook_post,created_time=datetime.datetime.now())
         facebook_comment.save()
     
-    return JsonResponse(data={"message": "success"})
+    return redirect(reverse('reporting:collect_comments_page'))
 
 def growth_default_page(request):
     return None

@@ -21,17 +21,33 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {% for post in posts %}
-                        <tr>
-                          <td><a href="#">{{post.created_time}}</a></td>
-                          <td>?</td>
-                          <td>{{post.content}}</td>
+                      {% for post in posts %}
+                      <tr>
+                        <td><a href="#">{{post.created_time|date:"SHORT_DATE_FORMAT"}}</a></td>
+                        <td>{{post.facebookcomment_set.all|length}}</td>
+                        <td>{{ post.content|slice:":44" }}..</td>
+                          {% if post.facebookcomment_set.all|length == 0 %}
+
                           <td><label class="badge badge-danger">Comments missing</label></td>
                           <td><label class="badge badge-danger">Not done yet</label></td>
-                          <td><a href="#">Sync Comments</a></td>
-                        </tr>
-                        {% endfor %}
-                        <tr>
+                          <td><a href="{% url 'reporting:sync_comments' post.pk %}">Sync Comments</a></td>
+
+                          {% elif not post.facebookpostreport or post.facebookpostreport.sentiment == None %}
+
+                          <td><label class="badge badge-success">Synced</label></td>
+                          <td><label class="badge badge-danger">Not done yet</label></td>
+                          <td><a href="{% url 'reporting:sentiments_page' post.pk %}">Analyze comments</a></td>
+
+                          {% else %}
+
+                          <td><label class="badge badge-success">Synced</label></td>
+                          <td><label class="badge badge-success">Done</label></td>
+                          <td><a href="{% url 'reporting:sentiments_page' post.pk %}">Check results</a></td>
+
+                          {% endif %}
+                      </tr>
+                      {% endfor %}
+                     <!--  <tr>
                           <td><a href="#">13/05/2020</a></td>
                           <td>87</td>
                           <td>Today we celebrate the annual anniversary of..</td>
@@ -63,6 +79,7 @@
                             <td><label class="badge badge-success">Done</label></td>
                             <td><a href="#">Check results</a></td>
                         </tr>
+                        -->
                     </tbody>
                   </table>
                 </div>

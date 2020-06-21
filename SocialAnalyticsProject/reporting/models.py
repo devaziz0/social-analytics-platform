@@ -19,9 +19,9 @@ class FacebookPost(models.Model):
     
     created_time= models.DateTimeField()
     content = models.CharField(max_length=2048)
-    week_day = models.IntegerField()
-    hour = models.IntegerField()
-    post_type = models.IntegerField()
+    week_day = models.IntegerField(null=True)
+    hour = models.IntegerField(null=True)
+    post_type = models.IntegerField(null=True)
     post_id = models.CharField(max_length=2048, unique=True)
     page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE)
 
@@ -45,13 +45,13 @@ class InstagramReport(models.Model):
 
 
 class FacebookPostReport(models.Model):
-    reactions = models.IntegerField()
-    reach = models.IntegerField()
+    reactions = models.IntegerField(default=0)
+    reach = models.IntegerField(default=0)
     impressions = models.IntegerField()
     engagement = models.IntegerField()
-    sentiment = JSONField()
+    sentiment = JSONField(null=True)
     date = models.DateField()
-    post = models.ForeignKey(FacebookPost,on_delete=models.CASCADE)
+    post = models.OneToOneField(FacebookPost,on_delete=models.CASCADE)
 
 class FacebookPageReport(models.Model):
     impressions = models.IntegerField()
