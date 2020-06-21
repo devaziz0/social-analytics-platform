@@ -6,7 +6,7 @@ from modules.utils.helpers import get_page_post_helper
 # Signal launched after a user is signed up and before the login occue
 @receiver(user_signed_up)
 def social_login_handler(sender, **kwargs):
-    from .models import FacebookPage  # or...
+    from reporting.models import FacebookPage  # or...
     from reporting.models import FacebookPost
     
 	# Retrieve the social account object

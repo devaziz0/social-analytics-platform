@@ -8,8 +8,7 @@ ENV APP_PATH /opt/$APP_DIR_NAME
 COPY requirements.txt /
 RUN pip3 install -r requirements.txt
 RUN rm requirements.txt
-RUN pip3 install sklearn
-RUN pip3 install Flask
+
 
 #adding the django project
 RUN mkdir -p $APP_PATH
