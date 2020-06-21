@@ -12,6 +12,7 @@ urlpatterns = [
     path('pages/<int:page_pk>/growth/28days_monthly',views.get_28days_monthly_growth,name='this_month_vas_last_month_growth'),
     path('pages/<int:page_pk>/growth/1day_daily',views.get_1day_daily_growth,name='today_vs_yesterday_growth'),
     path('growth/page/<int:page_pk>', views.growth_page, name='growth_page'),
+    path('growth/', views.growth_default_page, name='growth_default_page'),
     path('news/category/<str:category>', views.get_top_headlines_category, name='get_top_headlines_category'),
     path('news/q/<str:keyword>', views.get_top_headlines_keyword, name='get_top_headlines_keyword'),
     path('news/', views.news_suggestions, name='news_suggestions'),

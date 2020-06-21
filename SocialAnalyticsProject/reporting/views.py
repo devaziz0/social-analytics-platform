@@ -230,3 +230,6 @@ def sync_comments(request,post_id):
         facebook_comment.save()
     
     return JsonResponse(data={"message": "success"})
+
+def growth_default_page(request):
+    return None
