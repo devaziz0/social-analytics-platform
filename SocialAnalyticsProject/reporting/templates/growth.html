@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block content %}
+
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <h2></h2>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 stretch-card grid-margin">
+              <div class="card bg-gradient-danger card-img-holder text-white">
+                <div class="card-body">
+                  <h4 class="font-weight-normal mb-3">28 Days Monthly Engagement Growth <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  <h2 id="m28d" class="mb-5"></h2>
+                  <h6 class="card-text">Growth: <span id="m28d-ratio"></span>%</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 stretch-card grid-margin">
+              <div class="card bg-gradient-info card-img-holder text-white">
+                <div class="card-body">
+                  <h4 class="font-weight-normal mb-3">7 Days Monthly Engagement Growth <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  <h2 id="m7d" class="mb-5"></h2>
+                  <h6 class="card-text">Growth: <span id="m7d-ratio"></span>%</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 stretch-card grid-margin">
+              <div class="card bg-gradient-success card-img-holder text-white">
+                <div class="card-body">
+                  <h4 class="font-weight-normal mb-3">1 Day Monthly Engagement Growth <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  <h2 id="m1d" class="mb-5"></h2>
+                  <h6 class="card-text">Growth: <span id="m1d-ratio"></span>%</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 stretch-card grid-margin">
+              <div class="card bg-gradient-dark card-img-holder text-white">
+                <div class="card-body">
+                  <h4 class="font-weight-normal mb-3">Daily Engagement Growth <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  <h2 id="d1d" class="mb-5"></h2>
+                  <h6 class="card-text">Growth: <span id="d1d-ratio"></span>%</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <script>
+        function showGrowth(page_id) {
+            var result = null;
+            $.get( "/pages/" + page_id + "/growth/1day_monthly", function( data ) {
+                result = data;
+                console.log(result);
+                $('#m1d').html(result.current + ' (' + result.growth + ')')
+                $('#m1d-ratio').html(result.ratio)
+            });
+            
+            var result = null;
+            $.get( "/pages/" + page_id + "/growth/1week_monthly", function( data ) {
+                result = data;
+                console.log(result);
+                $('#m7d').html(result.current + ' (' + result.growth + ')')
+                $('#m7d-ratio').html(result.ratio)
+            });
+            
+            var result = null;
+            $.get( "/pages/" + page_id + "/growth/28days_monthly", function( data ) {
+                result = data;
+                console.log(result);
+                $('#m28d').html(result.current + ' (' + result.growth + ')')
+                $('#m28d-ratio').html(result.ratio)
+            });
+            
+            var result = null;
+            $.get( "/pages/" + page_id + "/growth/1day_daily", function( data ) {
+                result = data;
+                console.log(result);
+                $('#d1d').html(result.current + ' (' + result.growth + ')')
+                $('#d1d-ratio').html(result.ratio)
+            });
+        }
+        
+        showGrowth({{page_pk}});
+    </script>
+    {% endblock %}

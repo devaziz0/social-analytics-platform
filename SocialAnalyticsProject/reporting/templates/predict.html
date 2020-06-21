@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+        {% block content %}
+        <div class="row">
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Prediction form</h4>
+                  <p class="card-description"> Fill the required information to estimate the reactions </p>
+                  <form class="forms-sample">
+                    <div class="form-group">
+                      <label for="inputReach">Reach</label>
+                      <input type="text" class="form-control" id="inputReach" placeholder="Reach">
+                    </div>
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="inputWeekDay">Week Day</label>
+                        <select class="form-control" id="inputWeekDay">
+                          <option>Sunday</option>
+                          <option>Monday</option>
+                          <option>Tuesday</option>
+                          <option>Wednesday</option>
+                          <option>Thursday</option>
+                          <option>Friday</option>
+                          <option>Saturday</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTime">Time</label>
+                        <input type="text" class="form-control" id="inputTime" placeholder="Time">
+                    </div>
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="inputType">Post Type</label>
+                        <select class="form-control" id="inputType">
+                          <option>Picture</option>
+                          <option>Link</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Prediction</h4>
+                      <img src="{% static 'assets/images/fb_reactions.png' %}" class="mb-2 mw-80 w-50 rounded" alt="image">
+                      <h1 style="color: #0a8ea0; font-size: 5vw;">139 Reactions</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <script>
+
+    </script>
+    {% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+        {% block content %}
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Page's posts</h4>
+                  {% for p in pages %}
+                  <p>{{p}}</p>
+                  {% endfor %}
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>No of comments</th>
+                        <th>Content</th>
+                        <th>Comments Status</th>
+                        <th>Sentiments Analysis Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td><a href="#">13/05/2020</a></td>
+                          <td>87</td>
+                          <td>Today we celebrate the annual anniversary of..</td>
+                            <td><label class="badge badge-danger">Comments missing</label></td>
+                            <td><label class="badge badge-danger">Not done yet</label></td>
+                            <td><a href="#">Sync Comments</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">13/05/2020</a></td>
+                            <td>87</td>
+                            <td>Today we celebrate the annual anniversary of..</td>
+                            <td><label class="badge badge-success">Synced</label></td>
+                            <td><label class="badge badge-danger">Not done yet</label></td>
+                            <td><a href="#">Analyze comments</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">13/05/2020</a></td>
+                            <td>87</td>
+                            <td>Today we celebrate the annual anniversary of..</td>
+                            <td><label class="badge badge-danger">Comments missing</label></td>
+                            <td><label class="badge badge-info">In Progress</label></td>
+                            <td><a href="#">Sync Comments</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">13/05/2020</a></td>
+                            <td>87</td>
+                            <td>Today we celebrate the annual anniversary of..</td>
+                            <td><label class="badge badge-success">Synced</label></td>
+                            <td><label class="badge badge-success">Done</label></td>
+                            <td><a href="#">Check results</a></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}

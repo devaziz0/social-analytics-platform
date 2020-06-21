@@ -26,4 +26,20 @@ def top_headlines_category(category):
     
     # extracting data in json format 
     data = r.json()
+    return data  
+
+# Method to get top headlines per keyword
+# Not all keywords get results, some will get none
+def top_headlines_keyword(keyword):
+    PARAMS = {
+        'language': language,
+        'country': country,
+        'q': keyword,
+        'apiKey': apiKey,
+        }
+
+    r = requests.get(url = url_top_headlines, params = PARAMS) 
+    
+    # extracting data in json format 
+    data = r.json()
     return data

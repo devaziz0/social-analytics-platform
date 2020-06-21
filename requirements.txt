@@ -4,3 +4,4 @@ django-allauth
 django-sslserver
 celery==4.4.0
 requests
+pytrends

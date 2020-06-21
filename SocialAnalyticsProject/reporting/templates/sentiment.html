@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+        {% block content %}
+        <div class="row">
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Analysis</h4>
+                      <a href="#"><h6>Post Link</h6></a><br>
+                      <h6>Comments analyzed: 64</h6><br>
+                      <h6>Overall score: <span style="color:#5cb85c">Positive</span></h6><br>
+                      <canvas id="donutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        // For a pie chart
+        var donut = document.getElementById('donutChart').getContext('2d');
+        var myPieChart = new Chart(donut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Positive', 'Negative', 'Neutral'],
+                datasets: [{
+                    data: [65, 12, 23],
+                    backgroundColor: ["#5cb85c", "#d9534f", "#428bca"], 
+                }],
+            }
+        });
+    </script>
+    {% endblock %}

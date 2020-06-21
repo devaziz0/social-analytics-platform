@@ -1,8 +1,19 @@
 from django.db import models
 from landing.models import *
 from django.contrib.postgres.fields import JSONField
+from django.db import models
+from django.contrib.auth.models import User
+from allauth.socialaccount.models import SocialAccount
 
-# Create your models here.
+class FacebookPage(models.Model):
+    page_id = models.CharField(max_length=2048,unique=True)
+    account = models.ForeignKey(SocialAccount,on_delete=models.CASCADE)
+    access_token = models.CharField(max_length=2048)
+    name =  models.CharField(max_length=248)
+
+    def __str__(self):
+        return self.name
+    
 
 class FacebookPost(models.Model):
     
@@ -42,3 +53,10 @@ class FacebookPageReport(models.Model):
     engagement = models.IntegerField()
     date = models.DateField()
     page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE)
+
+
+class UserPreferences(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    business_category = models.CharField(max_length=128)
+    fav_page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE)
+

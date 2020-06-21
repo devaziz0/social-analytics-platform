@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
         {% block content %}
-
+        <div class="row">
+            <div class="col-md-3 grid-margin stretch-card">
+              <h2>Type your keywords here: </h2> 
+            </div>
+            <div class="col-md-4 grid-margin stretch-card">
+              <input id='newkeyword' class="form-control border-0" placeholder="Keyword" type="text" style="margin-left: 10px;">
+            </div>
+            <div class="col-md-2 grid-margin stretch-card">
+              <button class="btn" onclick="submitKeyword()">Submit</button>
+            </div>
+        </div>
         <div class="row">
           <div class="col-md-12 grid-margin stretch-card">
-            <h2>Showing links recommendation based on the category: Entertainement</h2>
+            <h2>Showing links recommendation based on the following trending keywords: </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <h4 id="keywords_list"></h4>
           </div>
         </div>
             <div class="row">
@@ -262,14 +277,14 @@
     <script>
         function showNews(category) {
             var result = null;
-            $.get( "/news/" + category, function( data ) {
+            $.get( "/news/q/" + category, function( data ) {
                 result = data;
                 console.log(result);
                 for (a of result){
                     $('.news-url').eq(result.indexOf(a)).attr('href', result[result.indexOf(a)].url)
                     $('.news-title').eq(result.indexOf(a)).html(result[result.indexOf(a)].title)
                     $('.news-description').eq(result.indexOf(a)).html(result[result.indexOf(a)].description)
-                    $('.news-image').eq(result.indexOf(a)).attr('src', result[result.indexOf(a)].urlToImage)
+                    $('.news-image').eq(result.indexOf(a)).attr('src', result[result.indexOf(a)].image)
                     $('.news-author').eq(result.indexOf(a)).html(result[result.indexOf(a)].author)
                     $('.news-source').eq(result.indexOf(a)).html(result[result.indexOf(a)].source.name)
                 }
@@ -279,6 +294,29 @@
             });
         }
         
-        showNews('entertainement');
+        showNews('photography');
+
+        function showKeywords(keyword) {
+            var result = null;
+            $.get( "/related-topics/" + keyword, function( data ) {
+                result = data;
+                console.log(result);
+                var keywords_list = '';
+                var i = 0;
+                while(result[i]) {
+                    keywords_list += ' - ' + result[i];
+                    i++;
+                }
+                $('#keywords_list').html(keywords_list);
+            });
+        }
+
+        showKeywords('photography')
+
+        function submitKeyword() {
+            var new_keyword = $('#newkeyword').val()
+            showNews(new_keyword);
+            showKeywords(new_keyword);
+        }
     </script>
     {% endblock %}

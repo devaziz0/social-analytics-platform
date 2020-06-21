@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+        {% block content %}
+        <div class="row">
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Page's posts</h4>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>No of comments</th>
+                        <th>Content</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td>13/05/2020</td>
+                          <td>87</td>
+                          <td>Today we celebrate the annual anniversary of..</td>
+                          <td><a href="#">Start Analysis</a></td>
+                        </tr>
+                        <tr>
+                          <td>13/05/2020</td>
+                          <td>87</td>
+                          <td>Today we celebrate the annual anniversary of..</td>
+                          <td><a href="#">Results</a></td>
+                        </tr>
+                        <tr>
+                            <td>13/05/2020</td>
+                            <td>87</td>
+                            <td>Today we celebrate the annual anniversary of..</td>
+                            <td><label class="badge badge-danger">Comments missing</label></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+          </div>
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
