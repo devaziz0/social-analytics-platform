@@ -23,6 +23,8 @@ class FacebookPost(models.Model):
     hour = models.IntegerField(null=True)
     post_type = models.IntegerField(null=True)
     post_id = models.CharField(max_length=2048, unique=True)
+    comments_synced = models.BooleanField(default=False)
+    nb_comments = models.IntegerField(default=0)
     page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE)
 
 class FacebookComment(models.Model):
