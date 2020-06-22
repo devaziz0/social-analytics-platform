@@ -210,6 +210,9 @@ def sentiments_page(request,post_id):
 
         data = predict_multiple_comments(facebook_comment_list)
 
+        post_report.sentiment = data
+        post_report.save()
+
     else:
         data = post_report.sentiment
 
@@ -232,7 +235,7 @@ def collect_comments_page(request):
             )
         user_prefs.save()
     page = user_prefs.fav_page
-    posts = FacebookPost.objects.filter(page=page)
+    posts = FacebookPost.objects.filter(page=page).order_by('-pk')
     context = {
         'title': 'Comments Collect',
         'page': page,
@@ -242,12 +245,20 @@ def collect_comments_page(request):
 
 def sync_comments(request,post_id):
     post = FacebookPost.objects.get(pk=post_id,page__account__user=request.user)
-    data_comments = get_comments(post.post_id,post.page.access_token)
-    print(data_comments)
-    for comment in data_comments['data']:
-        facebook_comment = FacebookComment.objects.create(content=comment['message'],comment_id=comment['id'],post=facebook_post,created_time=datetime.datetime.now())
-        facebook_comment.save()
     
+    if not post.comments_synced:
+        
+        data_comments = get_comments(post.post_id,post.page.access_token)
+
+        for comment in data_comments['data']:
+            facebook_comment = FacebookComment.objects.create(content=comment['message'],comment_id=comment['id'],post=post,created_time=datetime.datetime.now())
+            facebook_comment.save()
+
+        post.nb_comments = len(data_comments['data'])
+        post.comments_synced = True
+
+        post.save()
+
     return redirect(reverse('reporting:collect_comments_page'))
 
 def growth_default_page(request):

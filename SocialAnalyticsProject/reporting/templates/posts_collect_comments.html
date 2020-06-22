@@ -24,25 +24,31 @@
                       {% for post in posts %}
                       <tr>
                         <td><a href="#">{{post.created_time|date:"SHORT_DATE_FORMAT"}}</a></td>
-                        <td>{{post.facebookcomment_set.all|length}}</td>
+                        <td>{{post.nb_comments}}</td>
                         <td>{{ post.content|slice:":44" }}..</td>
-                          {% if post.facebookcomment_set.all|length == 0 %}
+                          {% if not post.comments_synced %}
 
                           <td><label class="badge badge-danger">Comments missing</label></td>
                           <td><label class="badge badge-danger">Not done yet</label></td>
                           <td><a href="{% url 'reporting:sync_comments' post.pk %}">Sync Comments</a></td>
 
-                          {% elif not post.facebookpostreport or post.facebookpostreport.sentiment == None %}
+                          {% elif post.facebookpostreport.sentiment == None and post.nb_comments != 0 %}
 
                           <td><label class="badge badge-success">Synced</label></td>
                           <td><label class="badge badge-danger">Not done yet</label></td>
                           <td><a href="{% url 'reporting:sentiments_page' post.pk %}">Analyze comments</a></td>
 
-                          {% else %}
+                          {% elif post.facebookpostreport.sentiment != None %}
 
                           <td><label class="badge badge-success">Synced</label></td>
                           <td><label class="badge badge-success">Done</label></td>
                           <td><a href="{% url 'reporting:sentiments_page' post.pk %}">Check results</a></td>
+                          
+                          {% else %}
+
+                          <td><label class="badge badge-success">Synced</label></td>
+                          <td><label class="badge badge-danger">Not done yet</label></td>
+                          <td>No comments</td>
 
                           {% endif %}
                       </tr>
