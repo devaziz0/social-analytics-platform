@@ -227,8 +227,10 @@ def collect_comments_page(request):
         page = FacebookPage.objects.filter(account__user=request.user).first()
         user_prefs = UserPreferences(
             user=request.user,
-            fav_page=page
+            fav_page=page,
+            business_category='',
             )
+        user_prefs.save()
     page = user_prefs.fav_page
     posts = FacebookPost.objects.filter(page=page)
     context = {
@@ -249,4 +251,20 @@ def sync_comments(request,post_id):
     return redirect(reverse('reporting:collect_comments_page'))
 
 def growth_default_page(request):
-    return None
+    try:
+        user_prefs = UserPreferences.objects.get(user=request.user)
+    except:
+        # We take the first page in case there is no user prefs
+        page = FacebookPage.objects.filter(account__user=request.user).first()
+        user_prefs = UserPreferences(
+            user=request.user,
+            fav_page=page,
+            business_category='',
+            )
+        user_prefs.save()
+    page = user_prefs.fav_page
+    context = {
+        'title': 'Growth',
+        'page_pk': page.pk,
+    }
+    return render(request, 'growth.html', context)

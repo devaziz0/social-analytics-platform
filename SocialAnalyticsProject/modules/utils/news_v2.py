@@ -34,5 +34,3 @@ def top_headlines_keyword_v2(keyword):
     # extracting data in json format 
     data = r.json()
     return data
-
-print(top_headlines_keyword_v2('amd'))

@@ -62,6 +62,6 @@ class FacebookPageReport(models.Model):
 
 class UserPreferences(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    business_category = models.CharField(max_length=128)
-    fav_page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE)
+    business_category = models.CharField(max_length=128, null=True)
+    fav_page = models.ForeignKey(FacebookPage,on_delete=models.CASCADE, null=True)
 
