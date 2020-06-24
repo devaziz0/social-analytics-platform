@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-dataset = pd.read_csv('E:\Dev\social-analytics-platform\prediction\dataset_mc.csv')
+dataset = pd.read_csv('D:\Dev\social-analytics-platform\prediction\dataset_mc.csv')
 x = dataset.iloc[:,1:5]
 y = dataset['Reactions']
 x_train, x_test, y_train, y_test = train_test_split(x,y)
