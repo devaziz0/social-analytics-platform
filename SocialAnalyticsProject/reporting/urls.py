@@ -23,4 +23,5 @@ urlpatterns = [
     path('post/<int:post_id>/sentiments/', views.sentiments_page, name='sentiments_page'),
     path('related-topics/<str:topic>',views.get_related_topics, name= 'get_related_topics'),
     path('collect-comments/',views.collect_comments_page, name= 'collect_comments_page'),
+    path('change-fav-page/',views.change_fav_page, name= 'change-fav-page'),
 ]

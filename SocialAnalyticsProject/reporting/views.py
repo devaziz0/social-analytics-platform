@@ -10,9 +10,14 @@ from modules.utils.news_v2 import *
 from modules.utils.trends import *
 from modules.sentiment_analysis.sentiment_urls import predict_multiple_comments
 from modules.sentiment_analysis.sentiment_urls import predict_multiple_comments
+from modules.utils.facebook_urls import *
+
 
 from .models import *
 
+def get_user_pages(request):
+    user_pages = FacebookPage.objects.filter(account__user=request.user)
+    return user_pages
 
 def get_insight(request):
     #user = request.user
@@ -169,6 +174,7 @@ def get_post_sentiment(request, post_id):
 def news_suggestions(request):
     context = {
         'title': 'News Suggestion',
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'news.html', context)
 
@@ -176,12 +182,14 @@ def news_suggestions(request):
 def news_suggestions_keyword(request):
     context = {
         'title': 'News Suggestion Keyword',
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'keyword_news.html', context)
 
 def growth_choose_page(request):
     context = {
         'title': 'Growth - Choose a page',
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'growth_choose.html', context)
     
@@ -189,12 +197,14 @@ def growth_page(request, page_pk):
     context = {
         'title': 'Growth',
         'page_pk': page_pk,
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'growth.html', context)
         
 def predict_page(request):
     context = {
         'title': 'Post Prediction',
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'predict.html', context)
 
@@ -219,6 +229,7 @@ def sentiments_page(request,post_id):
     context = {
         'title': 'Sentiment Analysis',
         "data": data,
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'sentiment.html', context)
 
@@ -240,6 +251,7 @@ def collect_comments_page(request):
         'title': 'Comments Collect',
         'page': page,
         'posts': posts,
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'posts_collect_comments.html', context)
 
@@ -277,5 +289,14 @@ def growth_default_page(request):
     context = {
         'title': 'Growth',
         'page_pk': page.pk,
+        'user_pages': get_user_pages(request),
     }
     return render(request, 'growth.html', context)
+
+def change_fav_page(request):
+    new_pk = POST['pk']
+    new_page = FacebookPage.objects.get(pk=new_pk)
+    user_prefs = UserPreferences.objects.get(user=request.user)
+    user_prefs.page = new_page
+    user_prefs.save()
+    return JsonResponse(data={"message": "success"}, safe=False)

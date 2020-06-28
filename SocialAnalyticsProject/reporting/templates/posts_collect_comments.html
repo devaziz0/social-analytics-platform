@@ -25,7 +25,7 @@
                       <tr>
                         <td><a href="#">{{post.created_time|date:"SHORT_DATE_FORMAT"}}</a></td>
                         <td>{{post.nb_comments}}</td>
-                        <td>{{ post.content|slice:":44" }}..</td>
+                        <td>{{ post.content|slice:":20" }}..</td>
                           {% if not post.comments_synced %}
 
                           <td><label class="badge badge-danger">Comments missing</label></td>
