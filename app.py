@@ -151,7 +151,10 @@ def predict_batch_view():
         response = {"NEGATIVE": 0, "POSITIVE": 0, "NEUTRAL": 0, }
 
         for message in msgs_list:
-            lang = detect(message)
+            try:
+                lang = detect(message)
+            except:
+                lang = ''
 
             # Only do prediction on english messages
             if lang == 'en':
