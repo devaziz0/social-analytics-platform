@@ -294,9 +294,15 @@ def growth_default_page(request):
     return render(request, 'growth.html', context)
 
 def change_fav_page(request):
-    new_pk = POST['pk']
+    new_pk = request.POST['pk']
     new_page = FacebookPage.objects.get(pk=new_pk)
     user_prefs = UserPreferences.objects.get(user=request.user)
-    user_prefs.page = new_page
+    user_prefs.fav_page = new_page
     user_prefs.save()
     return JsonResponse(data={"message": "success"}, safe=False)
+    
+def login_page(request):
+    context = {
+        'title': 'Login',
+    }
+    return render(request, 'login.html', context)
