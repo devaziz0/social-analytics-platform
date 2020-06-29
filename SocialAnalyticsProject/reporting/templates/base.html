@@ -20,6 +20,7 @@
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
   </head>
   <body>
+    {% csrf_token %}
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -60,6 +61,18 @@
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
               </div>
             </li> -->
+            <li class="nav-item d-none d-lg-block full-screen-link">
+              <div class="form-group">
+                <div class="form-group">
+                  <label for="inputType">Post Type</label>
+                  <select class="form-control" id="inputFavPage" onchange="changeF()">
+                    {% for p in user_pages %}
+                    <option value="{{p.pk}}">{{p.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </li>
             <li class="nav-item d-none d-lg-block full-screen-link">
               <a class="nav-link">
                 <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
@@ -201,7 +214,7 @@
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/news/keyword">By keywords</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/news/category">By category</a></li>
+                  <!-- <li class="nav-item"> <a class="nav-link" href="/news/category">By category</a></li> -->
                 </ul>
               </div>
             </li>
@@ -311,6 +324,26 @@
     <script src="{% static 'assets/js/todolist.js' %}"></script>
     <!-- End custom js for this page -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script>
+     function changeF() {
+        $.ajax({
+          type: "POST",
+          url: '{% url "reporting:change-fav-page" %}',
+          data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            pk: $('#inputFavPage option:selected').val()
+          },
+          success: function(res) {
+            location.reload();
+          },
+        });
+      })
+      function changeFavPage() {
+
+      }
+
+    </script>
 
     {% block scripts %}
     {% endblock %}

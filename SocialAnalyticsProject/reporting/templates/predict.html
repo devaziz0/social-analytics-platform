@@ -12,32 +12,32 @@
                   <form class="forms-sample">
                     <div class="form-group">
                       <label for="inputReach">Reach</label>
-                      <input type="text" class="form-control" id="inputReach" placeholder="Reach">
+                      <input type="text" class="form-control" id="inputReach" placeholder="Reach" onchange="updateReactions()">
                     </div>
                     <div class="form-group">
                       <div class="form-group">
                         <label for="inputWeekDay">Week Day</label>
-                        <select class="form-control" id="inputWeekDay">
-                          <option>Sunday</option>
-                          <option>Monday</option>
-                          <option>Tuesday</option>
-                          <option>Wednesday</option>
-                          <option>Thursday</option>
-                          <option>Friday</option>
-                          <option>Saturday</option>
+                        <select name="weekday" class="form-control" id="inputWeekDay" onchange="updateReactions()">
+                          <option value="1">Sunday</option>
+                          <option value="2">Monday</option>
+                          <option value="3">Tuesday</option>
+                          <option value="4">Wednesday</option>
+                          <option value="5">Thursday</option>
+                          <option value="6">Friday</option>
+                          <option value="7">Saturday</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group">
                         <label for="inputTime">Time</label>
-                        <input type="text" class="form-control" id="inputTime" placeholder="Time">
+                        <input type="text" class="form-control" id="inputTime" placeholder="Time" onchange="updateReactions()">
                     </div>
                     <div class="form-group">
                       <div class="form-group">
                         <label for="inputType">Post Type</label>
-                        <select class="form-control" id="inputType">
-                          <option>Picture</option>
-                          <option>Link</option>
+                        <select class="form-control" id="inputType" onchange="updateReactions()">
+                          <option value="1">Picture</option>
+                          <option value="2">Link</option>
                         </select>
                       </div>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="card-body">
                       <h4 class="card-title">Prediction</h4>
                       <img src="{% static 'assets/images/fb_reactions.png' %}" class="mb-2 mw-80 w-50 rounded" alt="image">
-                      <h1 style="color: #0a8ea0; font-size: 5vw;">139 Reactions</h1>
+                      <h1 id="reactions" style="color: #0a8ea0; font-size: 5vw;">? Reactions</h1>
                     </div>
                 </div>
             </div>
@@ -67,6 +67,19 @@
 
     {% block scripts %}
     <script>
-
+      function updateReactions() {
+        var reach = $('#inputReach').val()
+        var reach_coef = 0.031170
+        var weekday = $('#inputWeekDay option:selected').val()
+        var weekday_coef = -4.077676
+        var time = $('#inputTime').val()
+        var time_coef = -0.029535
+        var typeinput = $('#inputType option:selected').val()
+        var type_coef = -0.867579
+        var intercept = 97.894934
+        var result = intercept + reach * reach_coef + weekday * weekday_coef + time * time_coef + typeinput * type_coef
+        result = Math.floor(result)
+        $('#reactions').html(result + " Reacions")
+      }
     </script>
     {% endblock %}
