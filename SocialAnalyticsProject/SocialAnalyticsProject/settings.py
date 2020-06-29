@@ -176,7 +176,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-
+LOGIN_REDIRECT_URL = '/collect-comments'
 
 CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672'
 CELERY_ALWAYS_EAGER = False
@@ -196,3 +196,4 @@ CELERY_BEAT_SCHEDULE = {
     
 }
 ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = True

@@ -5,6 +5,8 @@ from . import views
 app_name = "reporting"
 
 urlpatterns = [
+    path('',views.login_page,name='login_page'),
+    path('login/',views.login_page,name='login_page'),
     path('report/',views.get_insight,name='report'),
     path('pages/<int:page_pk>/engagement/<str:date_preset>',views.get_engagement,name='engagement'),
     path('pages/<int:page_pk>/growth/1day_monthly',views.get_1day_monthly_growth,name='this_month_vas_last_month_growth'),
