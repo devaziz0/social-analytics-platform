@@ -17,12 +17,6 @@ services:
     depends_on: 
       - rabbitmq
       - celery_worker
-    environment:
-      GOOGLE_ADS_LOGIN_CUSTOMER_ID: '5358725466'
-      GOOGLE_ADS_DEVELOPER_TOKEN: '-xkxHJHAT8WChrK1D7hbpA'
-      GOOGLE_ADS_CLIENT_ID : '655568532862-l9fii845gmc7d015of3htq9jpdbc3sf8.apps.googleusercontent.com'
-      GOOGLE_ADS_CLIENT_SECRET: 'g1Fz9uox4xzN0y5Ol895UKXi'
-      GOOGLE_ADS_REFRESH_TOKEN: '1//03QhjkRTsWcU2CgYIARAAGAMSNwF-L9Ir6U1DfdAlCAoB4oBT6687edqPbdHy-KVJnPh6EYvIsaE12TXbxP_mBIVR2EkeK_cMD8c'
 
   # RabbitMQ Broker
   rabbitmq:
