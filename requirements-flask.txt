@@ -2,7 +2,7 @@ requests
 numpy
 pandas
 langdetect
-tensorflow==1.14.0
+tensorflow==1.15.4
 keras==2.2.5
 gensim
 Flask
